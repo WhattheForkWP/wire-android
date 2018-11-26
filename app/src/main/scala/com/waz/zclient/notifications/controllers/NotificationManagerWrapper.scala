@@ -273,6 +273,8 @@ case class NotificationProps(accountId:                UserId,
 
 trait NotificationManagerWrapper {
   def getActiveNotificationIds: Seq[Int]
+  def showNotification(id: Int, notificationProps: NotificationProps): Unit
+  def cancelNotifications(ids: Set[Int]): Unit
 }
 
 object NotificationManagerWrapper {
@@ -362,17 +364,9 @@ object NotificationManagerWrapper {
         })
     }
 
-    private val controller = inject[MessageNotificationsController]
-
-    controller.notificationsToCancel.onUi { ids =>
-      verbose(s"cancel: $ids")
-      ids.foreach(notificationManager.cancel)
-    }
-
-    controller.notificationToBuild.onUi { case (id, props) =>
+    def showNotification(id: Int, notificationProps: NotificationProps) = {
       verbose(s"build: $id")
-
-      notificationManager.notify(id, props.build())
+      notificationManager.notify(id, notificationProps.build())
     }
 
     override def getActiveNotificationIds: Seq[Int] =
@@ -427,6 +421,11 @@ object NotificationManagerWrapper {
         case _: FileNotFoundException => false
         case _: IOException => false
       }
+    }
+
+    override def cancelNotifications(ids: Set[Int]): Unit = {
+      verbose(s"cancel: $ids")
+      ids.foreach(notificationManager.cancel)
     }
   }
 }

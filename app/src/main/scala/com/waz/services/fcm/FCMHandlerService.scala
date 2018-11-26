@@ -48,7 +48,7 @@ class FCMHandlerService extends FirebaseMessagingService with ZMessagingService 
 
   override def onNewToken(s: String): Unit = {
     ZMessaging.globalModule.map {
-      info(s"onNewToken()")
+      info(s"onNewToken: $s")
       _.tokenService.setNewToken()
     } (Threading.Background)
   }
