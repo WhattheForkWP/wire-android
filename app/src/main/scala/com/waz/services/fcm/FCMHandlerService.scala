@@ -26,9 +26,9 @@ import com.waz.service.ZMessaging.clock
 import com.waz.service.push.PushService.FetchFromIdle
 import com.waz.service.push.{PushService, ReceivedPushData, ReceivedPushStorage}
 import com.waz.service.{AccountsService, NetworkModeService, ZMessaging}
+import com.waz.services.ZMessagingService
 import com.waz.threading.Threading
 import com.waz.utils.{JsonDecoder, RichInstant, Serialized}
-import com.waz.zms.ZMessagingService
 import org.json
 import org.threeten.bp.Instant
 
